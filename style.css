@@ -20,8 +20,16 @@ body{
       margin: 5px;
       font-size:  20px;
       padding:  5px;
+      display:  flex;
+      justify-content: center;
+      align-items:  center;
 }
       
 #save{
       margin-left: auto;
+}
+
+canvas {
+      display: flex;
+     justify-content: center;
 }
