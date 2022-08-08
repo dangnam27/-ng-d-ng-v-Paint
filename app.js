@@ -3,6 +3,7 @@ let erase = document.querySelector('#erase');
 let decrease = document.querySelector('#decrease'); 
 let increase = document.querySelector('#increase') ;
 let sizeEl = document.querySelector('#size') ;
+let circle = document.querySelector('#circle')
 let save = document.querySelector('#save') ;
 let clear = document.querySelector('#clear'); 
 let canvas= document.querySelector('canvas');
@@ -37,7 +38,7 @@ document.addEventListener('mousemove',function(e){
             x : e.offsetX,
             y : e.offsetY
       }
-       // fille net vẽ
+            // fille net vẽ
       ctx.beginPath();
       ctx.arc(pos1.x, pos1.y, size, 0,2 * Math.PI);
       ctx.fillStyle = colorPaint;
@@ -53,6 +54,8 @@ document.addEventListener('mousemove',function(e){
 
       pos1.x = pos2.x;
       pos1.y= pos2.y;
+
+      
      }  
 })
 document.addEventListener('mouseup', function(e){
@@ -78,8 +81,8 @@ increase.addEventListener('click', function (){
 })
 
 clear.addEventListener('click', function(){
-      let canvasStats = canvas.getClientRects()[0]
-      ctx.clearRect(0, 0 , canvasStats.width, canvasStats.height)
+     
+      ctx.clearRect(0, 0 , 1000, 600)
 })
 save.addEventListener('click', function(){
      let output = canvas.toDataURL('image/png').replace("image/png", "image/octet-stream");
