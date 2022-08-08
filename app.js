@@ -22,44 +22,81 @@ let pos2 = {
 let isDrawing = false
 let colorPaint = '#000000';
 let size = 10
-sizeEl.innerText = size
+sizeEl.innerText = size;
+let flag = false;
 
-document.addEventListener('mousedown',function(e){
-      pos1 ={
-            x : e.offsetX,
-            y : e.offsetY
-      }
-      isDrawing = true
-})
-
-document.addEventListener('mousemove',function(e){
-     if(isDrawing){
-      pos2 ={
-            x : e.offsetX,
-            y : e.offsetY
-      }
-            // fille net vẽ
-      ctx.beginPath();
-      ctx.arc(pos1.x, pos1.y, size, 0,2 * Math.PI);
-      ctx.fillStyle = colorPaint;
-      ctx.fill();
-
-      // vẽ out line
-      ctx.beginPath();
-      ctx.moveTo(pos1.x, pos1.y);
-      ctx.lineTo(pos2.x, pos2.y);
-      ctx.strokeStyle = colorPaint;
-      ctx.lineWidth = size*2;
-      ctx.stroke();
-
-      pos1.x = pos2.x;
-      pos1.y= pos2.y;
-
+// vẽ tùy chọn
+color.addEventListener('click', function(){
+      document.addEventListener('mousedown',function(e){
+            pos1 ={
+                  x : e.offsetX,
+                  y : e.offsetY
+            }
+            isDrawing = true
+            flag = true
+      })     
+      document.addEventListener('mousemove',function(e){
+           if(isDrawing){
+            pos2 ={
+                  x : e.offsetX,
+                  y : e.offsetY
+            }
+                  // fille net vẽ
+                  if (flag){
+                        ctx.beginPath();
+            ctx.arc(pos1.x, pos1.y, size, 0,2 * Math.PI);
+            ctx.fillStyle = colorPaint;
+            ctx.fill();
       
-     }  
+            // vẽ out line
+            ctx.beginPath();
+            ctx.moveTo(pos1.x, pos1.y);
+            ctx.lineTo(pos2.x, pos2.y);
+            ctx.strokeStyle = colorPaint;
+            ctx.lineWidth = size*2;
+            ctx.stroke();
+      
+            pos1.x = pos2.x;
+            pos1.y= pos2.y;
+
+                  }
+            
+      
+            
+           }  
+      })
+      document.addEventListener('mouseup', function(e){
+            isDrawing = false;
+            
+      })
 })
-document.addEventListener('mouseup', function(e){
-      isDrawing = false;
+// vẽ theo hình
+circle.addEventListener('click', function(){
+      document.addEventListener('mousedown',function(e){
+            pos1 ={
+                  x : e.offsetX,
+                  y : e.offsetY
+            }
+            isDrawing = true
+      })
+      
+      document.addEventListener('mousemove',function(e){
+           if(isDrawing){
+            pos2 ={
+                  x : e.offsetX,
+                  y : e.offsetY
+            }
+
+            ctx.beginPath();
+            ctx.fillRect(pos1.x, pos1.y, 40, 40);
+            
+           }  
+      })
+      document.addEventListener('mouseup', function(e){
+            isDrawing = false;
+      })
+      
+      
 })
 
 color.addEventListener('change', function(e){
@@ -80,8 +117,7 @@ increase.addEventListener('click', function (){
       sizeEl.innerText = size
 })
 
-clear.addEventListener('click', function(){
-     
+clear.addEventListener('click', function(){  
       ctx.clearRect(0, 0 , 1000, 600)
 })
 save.addEventListener('click', function(){
