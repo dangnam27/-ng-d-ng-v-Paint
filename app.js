@@ -25,17 +25,8 @@ let size = 10
 sizeEl.innerText = size;
 let flag = false;
 
-// vẽ tùy chọn
-color.addEventListener('click', function(){
-      document.addEventListener('mousedown',function(e){
-            pos1 ={
-                  x : e.offsetX,
-                  y : e.offsetY
-            }
-            isDrawing = true
-      })     
-      document.addEventListener('mousemove',function(e){
-           if(isDrawing){
+function freeDrag(e){
+       if(isDrawing){
             pos2 ={
                   x : e.offsetX,
                   y : e.offsetY
@@ -56,18 +47,44 @@ color.addEventListener('click', function(){
             ctx.stroke();
       
             pos1.x = pos2.x;
-            pos1.y = pos2.y;
+            pos1.y= pos2.y;
 
-              
+                  }
            }  
-      })
+// vẽ tùy chọn
+color.addEventListener('click', function(){
+      // remove specile shape Drag listener
+      document.removeEventListener('mousemove', dragByShape)
+      document.addEventListener('mousedown',function(e){
+            pos1 ={
+                  x : e.offsetX,
+                  y : e.offsetY
+            }
+            isDrawing = true
+            flag = true
+      })     
+      document.addEventListener('mousemove', freeDrag)
       document.addEventListener('mouseup', function(e){
             isDrawing = false;
-            
       })
 })
+
+function dragByShape(e){
+      if(isDrawing){
+            pos2 ={
+                  x : e.offsetX,
+                  y : e.offsetY
+            }
+            ctx.beginPath();
+            ctx.fillRect(pos1.x, pos1.y, 40, 40);
+            
+           }  
+}
 // vẽ theo hình
 circle.addEventListener('click', function(){
+      // remove free Drag listener
+      document.removeEventListener('mousemove',freeDrag)
+
       document.addEventListener('mousedown',function(e){
             pos1 ={
                   x : e.offsetX,
@@ -76,17 +93,7 @@ circle.addEventListener('click', function(){
             isDrawing = true
       })
       
-      document.addEventListener('mouseup',function(e){
-           if(isDrawing){
-            pos2 ={
-                  x : e.offsetX,
-                  y : e.offsetY
-            }
-            ctx.beginPath();
-            ctx.rect(pos1.x, pos1.y, Math.abs(pos2.x -pos1.x) , Math.abs(pos2.y-pos1.y));
-            ctx.stroke();
-           }  
-      })
+      document.addEventListener('mousemove', dragByShape)
       document.addEventListener('mouseup', function(e){
             isDrawing = false;
       })
