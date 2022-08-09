@@ -33,7 +33,6 @@ color.addEventListener('click', function(){
                   y : e.offsetY
             }
             isDrawing = true
-            flag = true
       })     
       document.addEventListener('mousemove',function(e){
            if(isDrawing){
@@ -42,7 +41,7 @@ color.addEventListener('click', function(){
                   y : e.offsetY
             }
                   // fille net vẽ
-                  if (flag){
+              
                         ctx.beginPath();
             ctx.arc(pos1.x, pos1.y, size, 0,2 * Math.PI);
             ctx.fillStyle = colorPaint;
@@ -57,12 +56,9 @@ color.addEventListener('click', function(){
             ctx.stroke();
       
             pos1.x = pos2.x;
-            pos1.y= pos2.y;
+            pos1.y = pos2.y;
 
-                  }
-            
-      
-            
+              
            }  
       })
       document.addEventListener('mouseup', function(e){
@@ -80,22 +76,20 @@ circle.addEventListener('click', function(){
             isDrawing = true
       })
       
-      document.addEventListener('mousemove',function(e){
+      document.addEventListener('mouseup',function(e){
            if(isDrawing){
             pos2 ={
                   x : e.offsetX,
                   y : e.offsetY
             }
-
             ctx.beginPath();
-            ctx.fillRect(pos1.x, pos1.y, 40, 40);
-            
+            ctx.rect(pos1.x, pos1.y, Math.abs(pos2.x -pos1.x) , Math.abs(pos2.y-pos1.y));
+            ctx.stroke();
            }  
       })
       document.addEventListener('mouseup', function(e){
             isDrawing = false;
       })
-      
       
 })
 
