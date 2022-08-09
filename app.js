@@ -23,9 +23,10 @@ let isDrawing = false
 let colorPaint = '#000000';
 let size = 10
 sizeEl.innerText = size;
-let flag = false;
-
+ 
+//  draw free
 function freeDrag(e){
+
        if(isDrawing){
             pos2 ={
                   x : e.offsetX,
@@ -50,7 +51,7 @@ function freeDrag(e){
             pos1.y= pos2.y;
 
                   }
-           }  
+}  
 // vẽ tùy chọn
 color.addEventListener('click', function(){
       // remove specile shape Drag listener
@@ -70,14 +71,15 @@ color.addEventListener('click', function(){
 })
 
 function dragByShape(e){
+      
       if(isDrawing){
             pos2 ={
                   x : e.offsetX,
                   y : e.offsetY
             }
             ctx.beginPath();
-            ctx.fillRect(pos1.x, pos1.y, 40, 40);
-            
+            ctx.rect(pos1.x, pos1.y, Math.abs(pos2.x- pos1.x), Math.abs(pos2.y-pos1.y));
+            ctx.stroke();
            }  
 }
 // vẽ theo hình
@@ -93,7 +95,7 @@ circle.addEventListener('click', function(){
             isDrawing = true
       })
       
-      document.addEventListener('mousemove', dragByShape)
+      document.addEventListener('mouseup', dragByShape)
       document.addEventListener('mouseup', function(e){
             isDrawing = false;
       })
@@ -108,12 +110,12 @@ eraser.addEventListener('click', function(){
 })
 
 decrease.addEventListener('click', function (){
-    size -= 5
-    size = size > 5 ? size : 5
+    size -= 1
+    size = size > 1 ? size : 1
     sizeEl.innerText = size
 })
 increase.addEventListener('click', function (){
-      size += 5
+      size += 1
       size = size <30 ? size : 30
       sizeEl.innerText = size
 })
