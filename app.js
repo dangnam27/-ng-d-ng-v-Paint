@@ -3,12 +3,16 @@ let erase = document.querySelector('#erase');
 let decrease = document.querySelector('#decrease'); 
 let increase = document.querySelector('#increase') ;
 let sizeEl = document.querySelector('#size') ;
-let circle = document.querySelector('#circle')
+let pen = document.querySelector('#pen');
+let square = document.querySelector('#square');
+let circle = document.querySelector('#circle');
 let save = document.querySelector('#save') ;
 let clear = document.querySelector('#clear'); 
 let canvas= document.querySelector('canvas');
 let ctx = canvas.getContext('2d');
-
+let radius = 1;
+let r1 = 0 ;
+let r2 = 0 ;
 
 let pos1 = {
       x : 0,
@@ -52,8 +56,8 @@ function freeDrag(e){
 
                   }
 }  
-// vẽ tùy chọn
-color.addEventListener('click', function(){
+
+pen.addEventListener('click', function(){
       // remove specile shape Drag listener
       document.removeEventListener('mousemove', dragByShape)
       document.addEventListener('mousedown',function(e){
@@ -62,7 +66,6 @@ color.addEventListener('click', function(){
                   y : e.offsetY
             }
             isDrawing = true
-            flag = true
       })     
       document.addEventListener('mousemove', freeDrag)
       document.addEventListener('mouseup', function(e){
@@ -71,7 +74,7 @@ color.addEventListener('click', function(){
 })
 
 function dragByShape(e){
-      
+      isDrawing = true;
       if(isDrawing){
             pos2 ={
                   x : e.offsetX,
@@ -80,10 +83,25 @@ function dragByShape(e){
             ctx.beginPath();
             ctx.rect(pos1.x, pos1.y, Math.abs(pos2.x- pos1.x), Math.abs(pos2.y-pos1.y));
             ctx.stroke();
+          
            }  
 }
+function drawCircle(e){
+      isDrawing = true;
+      if(isDrawing){
+            pos2 = {
+                   x : e.offsetX,
+                   y : e.offsetY
+            }
+            
+            ctx.beginPath();
+            ctx.arc(pos1.x, pos1.y, size, 0 ,2 * Math.PI);
+            ctx.fillStyle = colorPaint;
+            ctx.fill();
+      }
+}
 // vẽ theo hình
-circle.addEventListener('click', function(){
+square.addEventListener('click', function(){
       // remove free Drag listener
       document.removeEventListener('mousemove',freeDrag)
 
@@ -96,17 +114,48 @@ circle.addEventListener('click', function(){
       })
       
       document.addEventListener('mouseup', dragByShape)
+    
       document.addEventListener('mouseup', function(e){
             isDrawing = false;
       })
       
 })
 
+// circle.addEventListener('click', function(){
+//       document.removeEventListener('mousemove', dragByShape)
+//       document.addEventListener('mousedown', function(e){
+//             pos1 = {
+//                   x : e.offsetX,
+//                   y : e.offsetY
+//             }
+//             isDrawing = true
+//       })
+//       document.addEventListener('mouseup', drawCircle)    
+      
+//       document.addEventListener('mouseup', function(e){
+//             isDrawing = false;
+//       })
+      
+// })
+
 color.addEventListener('change', function(e){
       colorPaint = e.target.value
 })
+
 eraser.addEventListener('click', function(){
       colorPaint = '#ffffff'
+      document.removeEventListener('mousemove', dragByShape)
+      document.addEventListener('mousedown',function(e){
+            pos1 ={
+                  x : e.offsetX,
+                  y : e.offsetY
+            }
+            isDrawing = true
+      })     
+      document.addEventListener('mousemove', freeDrag)
+      document.addEventListener('mouseup', function(e){
+            isDrawing = false;
+      })
 })
 
 decrease.addEventListener('click', function (){
