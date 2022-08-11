@@ -36,7 +36,7 @@ function freeDrag(e){
                   x : e.offsetX,
                   y : e.offsetY
             }
-                  // fille net vẽ
+            // fille net vẽ
               
                         ctx.beginPath();
             ctx.arc(pos1.x, pos1.y, size, 0,2 * Math.PI);
@@ -60,6 +60,7 @@ function freeDrag(e){
 pen.addEventListener('click', function(){
       // remove specile shape Drag listener
       document.removeEventListener('mousemove', dragByShape)
+      document.removeEventListener('mouseup',drawCircle)
       document.addEventListener('mousedown',function(e){
             pos1 ={
                   x : e.offsetX,
@@ -89,21 +90,21 @@ function dragByShape(e){
 function drawCircle(e){
       isDrawing = true;
       if(isDrawing){
-            pos2 = {
-                   x : e.offsetX,
-                   y : e.offsetY
-            }
-            
+            // pos2 = {
+            //        x : e.offsetX,
+            //        y : e.offsetY
+            // }
+
             ctx.beginPath();
             ctx.arc(pos1.x, pos1.y, size, 0 ,2 * Math.PI);
-            ctx.fillStyle = colorPaint;
-            ctx.fill();
+            ctx.stroke();
       }
 }
 // vẽ theo hình
 square.addEventListener('click', function(){
       // remove free Drag listener
       document.removeEventListener('mousemove',freeDrag)
+      document.removeEventListener('mouseup',drawCircle)
 
       document.addEventListener('mousedown',function(e){
             pos1 ={
@@ -121,22 +122,23 @@ square.addEventListener('click', function(){
       
 })
 
-// circle.addEventListener('click', function(){
-//       document.removeEventListener('mousemove', dragByShape)
-//       document.addEventListener('mousedown', function(e){
-//             pos1 = {
-//                   x : e.offsetX,
-//                   y : e.offsetY
-//             }
-//             isDrawing = true
-//       })
-//       document.addEventListener('mouseup', drawCircle)    
+circle.addEventListener('click', function(){
+      document.removeEventListener('mouseup', dragByShape)
+      document.removeEventListener('mousemove',freeDrag)
+      document.addEventListener('mousedown', function(e){
+            pos1 = {
+                  x : e.offsetX,
+                  y : e.offsetY
+            }
+            isDrawing = true
+      })
+      document.addEventListener('mouseup', drawCircle)    
       
-//       document.addEventListener('mouseup', function(e){
-//             isDrawing = false;
-//       })
+      document.addEventListener('mouseup', function(e){
+            isDrawing = false;
+      })
       
-// })
+})
 
 color.addEventListener('change', function(e){
       colorPaint = e.target.value
